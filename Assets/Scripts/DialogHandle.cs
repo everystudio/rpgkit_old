@@ -8,28 +8,39 @@ namespace rpgkit
     [RequireComponent(typeof(BoxCollider2D))]
     public class DialogHandle : MonoBehaviour
     {
+        public enum ACTIVATION_TYPE
+        {
+            BUTTON_PUSH = 0,
+            ENTER,
+            MAX,
+        }
+        [Header("Activation")]
+        public ACTIVATION_TYPE m_eActivationType;
+
         [Header("Message Lines")]
         public string[] m_MessageLineArray;
         public string[] m_GoodByeMessageArray;
 
+
+
         [SerializeField]
-        private bool m_bFlagActive;
+        public bool m_bFlagActive;
 
         public bool m_bIsPlaying;
 
-        // Start is called before the first frame update
-        void Start()
-        {
+        [Header("Quest Settings")]
+        public int m_iMarkQuestId;
+        public bool m_bMarkQuestComplete;
 
+        public void FinishedAction()
+        {
+            if(m_iMarkQuestId != 0)
+            {
+                DataManager.Instance.MarkQuest(m_iMarkQuestId, m_bMarkQuestComplete);
+            }
         }
 
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
-
-        public IEnumerator MessageStart(Action _onFinished)
+        public virtual IEnumerator MessageStart(Action _onFinished)
         {
             m_bIsPlaying = true;
             PlayerControl.Instance.m_bCanMove = false;
@@ -37,6 +48,9 @@ namespace rpgkit
             {
                 PlayerControl.Instance.m_bCanMove = true;
                 m_bIsPlaying = false;
+
+                FinishedAction();
+
                 _onFinished.Invoke();
             }));
         }
@@ -49,6 +63,16 @@ namespace rpgkit
             {
                 m_bFlagActive = true;
                 PlayerControl.Instance.m_dialogHandle = this;
+
+                if(m_eActivationType == ACTIVATION_TYPE.ENTER)
+                {
+                    Debug.Log("enter");
+                    StartCoroutine(PlayerControl.Instance.m_dialogHandle.MessageStart(() =>
+                    {
+                        PlayerControl.Instance.m_dialogHandle = null;
+                    }));
+                }
+
             }
         }
         private void OnTriggerExit2D(Collider2D other)

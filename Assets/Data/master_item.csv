@@ -1,0 +1,6 @@
+item_id,category,name,description,price,sell_price,affect_hp,affect_sp,offense,defense,sprite_name
+1,consume,ポーション,HPを50回復,30,15,50,0,0,0,item_potion
+2,consume,エーテル,MPを5回復する,30,15,0,5,0,0,item_ether
+3,weapon,ソード,よくある剣,100,50,0,0,1,0,item_sword
+4,armor,シールド,よくある盾,100,50,0,0,0,2,item_shield
+5,important,キー,シンプルな鍵,999,0,0,0,0,0,item_key
