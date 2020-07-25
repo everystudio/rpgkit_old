@@ -21,8 +21,6 @@ namespace rpgkit
         public string[] m_MessageLineArray;
         public string[] m_GoodByeMessageArray;
 
-
-
         [SerializeField]
         public bool m_bFlagActive;
 
