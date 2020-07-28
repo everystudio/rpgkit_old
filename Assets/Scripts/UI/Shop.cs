@@ -85,11 +85,42 @@ namespace rpgkit
             m_shopItemDetail.m_txtName.text = _master.name;
             m_shopItemDetail.m_txtDescription.text = _master.description;
         }
-        private void show_prompt(int _iPrice)
+        private void show_prompt(MasterItemParam _master)
         {
             m_goPrompt.SetActive(true);
+            m_btnPromptYes.onClick.RemoveAllListeners();
+            m_btnPromptYes.onClick.AddListener(() =>
+            {
+                m_goPrompt.SetActive(false);
 
-            m_txtPrompt.text = string.Format("{0}で購入しますか", _iPrice);
+                //DataManager.Instance.gold -= _master.price;
+                if ( _master.category == "equip")
+                {
+                    DataItemParam new_item = new DataItemParam();
+                    new_item.item_id = _master.item_id;
+                    DataManager.Instance.data_item_equip.AddItem(new_item);
+                }
+                else
+                {
+                    DataItemParam new_item = new DataItemParam();
+                    new_item.item_id = _master.item_id;
+                    DataManager.Instance.data_item_consume.AddItem(new_item);
+                }
+
+            });
+
+            if (_master.price <= DataManager.Instance.gold)
+            {
+                m_txtPrompt.text = string.Format("{0}で購入しますか", _master.price);
+                m_btnPromptYes.interactable = true;
+                m_btnPromptNo.interactable = true;
+            }
+            else
+            {
+                m_txtPrompt.text = string.Format("<color=red>ゴールドが不足しています</color>");
+                m_btnPromptYes.interactable = false;
+                m_btnPromptNo.interactable = true;
+            }
         }
 
         private IEnumerator buy()
@@ -113,7 +144,7 @@ namespace rpgkit
                     {
                         MasterItemParam master = DataManager.Instance.master_item.list.Find(p => p.item_id == item_id);
                         show_detail(master);
-                        show_prompt(master.price);
+                        show_prompt(master);
                     });
                 }
                 else

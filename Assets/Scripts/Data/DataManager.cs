@@ -14,7 +14,11 @@ namespace rpgkit
 		public MasterItem master_item;
 
 		public DataQuest data_quest;
-		public DataItem data_item;
+		public DataItem data_item_consume;
+		public DataItem data_item_equip;
+
+		// 購入に使う金額
+		public int gold { get; set; }
 
 		public override void Initialize()
 		{
@@ -28,8 +32,24 @@ namespace rpgkit
 			data_quest.SetSaveFilename("data/data_quest");
 			if(data_quest.Load()==false)
 			{
-				Debug.Log("loaderror");
+				Debug.Log("loaderror.data_quest");
 			}
+
+			data_item_consume = new DataItem();
+			data_item_consume.SetSaveFilename("data/data_item_consume");
+			if (data_item_consume.Load() == false)
+			{
+				Debug.Log("loaderror.data_item_consume");
+			}
+			data_item_equip = new DataItem();
+			data_item_equip.SetSaveFilename("data/data_item_equip");
+			if(data_item_equip.Load() == false)
+			{
+				Debug.Log("loaderror.data_item_equip");
+			}
+
+			gold = 100;
+
 			Initialized = true;
 		}
 
