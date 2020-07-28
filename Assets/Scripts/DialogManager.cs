@@ -47,12 +47,18 @@ namespace rpgkit
         public IEnumerator ShowDialog( string[] _strLineArr , Action _onFinished)
         {
             m_strLineArr = _strLineArr;
+
+            if(_strLineArr.Length == 0)
+            {
+                m_strLineArr = new string[1];
+                m_strLineArr[0] = "//noline";
+            }
             m_iCurrentLine = 0;
 
             do
             {
                 string strLine = m_strLineArr[m_iCurrentLine];
-                Debug.Log(strLine);
+                //Debug.Log(strLine);
                 if (check_name(strLine, out string strName))
                 {
                     show_name(strName);

@@ -272,7 +272,7 @@ namespace rpgkit
 			lines.RemoveAt(0); // header
 			foreach( string key in headerElements)
 			{
-				Debug.Log(key);
+				//Debug.Log(key);
 			}
 			// body
 			list = new List<T>();

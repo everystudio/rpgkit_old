@@ -18,9 +18,17 @@ namespace rpgkit
             }));
 
             // ここにショップの処理
+            Shop.Instance.Begin(item_list, () =>
+            {
+                FinishedAction();
+                _onFinished.Invoke();
+                StartCoroutine(DialogManager.Instance.ShowDialog(m_GoodByeMessageArray, () =>
+                {
+                    m_bIsPlaying = false;
+                    PlayerControl.Instance.m_bCanMove = true;
+                }));
+            });
 
-            FinishedAction();
-            _onFinished.Invoke();
 
         }
 
