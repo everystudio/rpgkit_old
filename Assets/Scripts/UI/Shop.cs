@@ -9,6 +9,7 @@ namespace rpgkit
 {
     public class Shop : StaticInstance<Shop>
     {
+        private const int item_limit = 1;
         public MasterItemParam[] m_itemLineup;
 
         public Button m_btnBuy;
@@ -53,7 +54,22 @@ namespace rpgkit
                 m_itemLineup[i] = master;
             }
 
-            StartCoroutine(buy());
+            m_btnBuy.onClick.RemoveAllListeners();
+            m_btnSellItem.onClick.RemoveAllListeners();
+            m_btnSellEquip.onClick.RemoveAllListeners();
+
+            m_btnBuy.onClick.AddListener(() =>
+            {
+                StartCoroutine(buy());
+            });
+            m_btnSellItem.onClick.AddListener(() =>
+            {
+                StartCoroutine(sell(DataManager.Instance.data_item_consume.list));
+            });
+            m_btnSellEquip.onClick.AddListener(() =>
+            {
+                StartCoroutine(sell(DataManager.Instance.data_item_equip.list));
+            });
 
             m_btnExit.onClick.RemoveAllListeners();
             m_btnExit.onClick.AddListener(() =>
@@ -64,10 +80,11 @@ namespace rpgkit
         }
         private void open()
         {
+            m_txtGold.text = string.Format("{0}g", DataManager.Instance.gold);
             m_goMenu.SetActive(true);
             m_goGold.SetActive(true);
             m_goDetail.SetActive(false);
-            m_goList.SetActive(true);
+            m_goList.SetActive(false);
             m_goPrompt.SetActive(false);
         }
 
@@ -85,7 +102,7 @@ namespace rpgkit
             m_shopItemDetail.m_txtName.text = _master.name;
             m_shopItemDetail.m_txtDescription.text = _master.description;
         }
-        private void show_prompt(MasterItemParam _master)
+        private void show_buy_prompt(MasterItemParam _master)
         {
             m_goPrompt.SetActive(true);
             m_btnPromptYes.onClick.RemoveAllListeners();
@@ -106,6 +123,8 @@ namespace rpgkit
                     new_item.item_id = _master.item_id;
                     DataManager.Instance.data_item_consume.AddItem(new_item);
                 }
+                DataManager.Instance.gold -= _master.price;
+                m_txtGold.text = string.Format("{0}g", DataManager.Instance.gold);
 
             });
 
@@ -121,16 +140,62 @@ namespace rpgkit
                 m_btnPromptYes.interactable = false;
                 m_btnPromptNo.interactable = true;
             }
+
+            //DataManager.Instance.gold -= _master.price;
+
+            bool bHasLimit;
+            if (_master.category == "equip")
+            {
+                bHasLimit = DataManager.Instance.data_item_equip.list.Count < item_limit;
+                if (bHasLimit == false)
+                {
+                    m_txtPrompt.text = string.Format("<color=red>装備が持ちきれません</color>");
+                }
+            }
+            else
+            {
+                bHasLimit = DataManager.Instance.data_item_consume.list.Count < item_limit;
+                if (bHasLimit == false)
+                {
+                    m_txtPrompt.text = string.Format("<color=red>アイテムが持ちきれません</color>");
+                }
+            }
+            m_btnPromptYes.interactable = bHasLimit;
+
+
+        }
+        private void show_sell_prompt(MasterItemParam _master , DataItemParam _data )
+        {
+            m_goPrompt.SetActive(true);
+            m_btnPromptYes.onClick.RemoveAllListeners();
+            m_btnPromptYes.onClick.AddListener(() =>
+            {
+                m_goPrompt.SetActive(false);
+
+                //DataManager.Instance.gold -= _master.price;
+                if (_master.category == "equip")
+                {
+                    DataManager.Instance.data_item_equip.list.Remove(_data);
+                }
+                else
+                {
+                    DataManager.Instance.data_item_consume.list.Remove(_data);
+                }
+                DataManager.Instance.gold += _master.sell_price;
+                m_txtGold.text = string.Format("{0}g", DataManager.Instance.gold);
+            });
+
+            m_txtPrompt.text = string.Format("{0}で売却しますか", _master.sell_price);
+            m_btnPromptYes.interactable = true;
+            m_btnPromptNo.interactable = true;
         }
 
         private IEnumerator buy()
         {
-            m_btnBuy.onClick.RemoveAllListeners();
-            m_btnSellItem.onClick.RemoveAllListeners();
-            m_btnSellEquip.onClick.RemoveAllListeners();
-            m_btnExit.onClick.RemoveAllListeners();
-
-            for( int i = 0; i < m_shopItemButtonArr.Length; i++)
+            m_goList.SetActive(true);
+            m_goDetail.SetActive(false);
+            m_goPrompt.SetActive(false);
+            for ( int i = 0; i < m_shopItemButtonArr.Length; i++)
             {
                 if(i < m_itemLineup.Length)
                 {
@@ -144,7 +209,7 @@ namespace rpgkit
                     {
                         MasterItemParam master = DataManager.Instance.master_item.list.Find(p => p.item_id == item_id);
                         show_detail(master);
-                        show_prompt(master);
+                        show_buy_prompt(master);
                     });
                 }
                 else
@@ -152,14 +217,40 @@ namespace rpgkit
                     m_shopItemButtonArr[i].gameObject.SetActive(false);
                 }
             }
-
-
-
             yield return null;
-
-
         }
+        private IEnumerator sell(List<DataItemParam> _list )
+        {
+            m_goList.SetActive(true);
+            m_goDetail.SetActive(false);
+            m_goPrompt.SetActive(false);
 
+            for (int i = 0; i < m_shopItemButtonArr.Length; i++)
+            {
+                if( i < _list.Count)
+                {
+                    m_shopItemButtonArr[i].gameObject.SetActive(true);
+
+                    int item_id = _list[i].item_id;
+                    DataItemParam data = _list[i];
+
+                    MasterItemParam master = DataManager.Instance.master_item.list.Find(p => p.item_id == item_id);
+
+                    m_shopItemButtonArr[i].m_txtName.text = master.name;
+                    m_shopItemButtonArr[i].m_txtPrice.text = master.price.ToString();
+                    m_shopItemButtonArr[i].m_btn.onClick.AddListener(() =>
+                    {
+                        show_detail(master);
+                        show_sell_prompt(master , data);
+                    });
+                }
+                else
+                {
+                    m_shopItemButtonArr[i].gameObject.SetActive(false);
+                }
+            }
+            yield return null;
+        }
 
     }
 }

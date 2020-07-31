@@ -700,6 +700,8 @@ MonoBehaviour:
   Initialized: 0
   m_taMasterQuest: {fileID: 4900000, guid: 46e3b599ae92cf444910fc8c5e7309b0, type: 3}
   m_taMasterItem: {fileID: 4900000, guid: 14b41d1da2ed2e7449aa67feec410453, type: 3}
+  m_taMasterChara: {fileID: 4900000, guid: 89df130ab8a6eb944b861ce4c5ce96b8, type: 3}
+  m_taMasterSkill: {fileID: 0}
 --- !u!4 &634513461
 Transform:
   m_ObjectHideFlags: 0
@@ -1602,7 +1604,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_targetObject: {fileID: 1289886424}
   m_iCheckQuestId: 1
-  m_bActiveIfCompleted: 1
+  m_bActiveIfCompleted: 0
 --- !u!4 &1201387063
 Transform:
   m_ObjectHideFlags: 0
