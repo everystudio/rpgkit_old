@@ -6,19 +6,20 @@ namespace rpgkit
 {
     public class UIControl : Singleton<UIControl>
     {
-        public GameObject m_goMenu;
+        public Menu m_Menu;
 
         private void Start()
         {
-            OnUpdate = idle;
+            OnUpdate = standby;
         }
-        public void idle(bool _bInit)
+        public void standby(bool _bInit)
         {
             if(_bInit)
             {
                 Debug.Log("idle.init");
+                m_Menu.gameObject.SetActive(false);
             }
-            if( Input .GetKeyDown(KeyCode.X))
+            if ( Input .GetKeyDown(KeyCode.X))
             {
                 OnUpdate = menu;
             }
@@ -29,9 +30,16 @@ namespace rpgkit
             if(_bInit)
             {
                 Debug.Log("menu.init");
-                m_goMenu.SetActive(true);
+                m_Menu.gameObject.SetActive(true);
+                m_Menu.Initialize();
+
+                m_Menu.m_btnClose.onClick.AddListener(() =>
+                {
+                    OnUpdate = standby;
+                    m_Menu.gameObject.SetActive(false);
+                });
             }
-            Debug.Log("menu.update");
+            //Debug.Log("menu.update");
         }
     }
 }

@@ -7,7 +7,7 @@ namespace rpgkit
     public class DataCharaParam : CsvDataParam
     {
         public int chara_id { get; set; }
-        public int party_position { get; set; }
+        public int position { get; set; }
         public int level { get; set; }
         public int hp_current { get; set; }
         public int hp_max { get; set; }
@@ -30,8 +30,11 @@ namespace rpgkit
 
         public void Build(int _iLevel , MasterCharaParam _master)
         {
-            hp_max = build_param_level(_master.hp, _iLevel);
-            sp_max = build_param_level(_master.sp, _iLevel);
+            level = _iLevel;
+            hp_max = build_param_level(_master.hp_base, _iLevel);
+            sp_max = build_param_level(_master.sp_base, _iLevel);
+            hp_current = hp_max;
+            sp_current = sp_max;
             strength = build_param_level(_master.strength_base, _iLevel);
             vital = build_param_level(_master.vital_base, _iLevel);
         }

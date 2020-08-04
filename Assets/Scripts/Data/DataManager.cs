@@ -46,6 +46,9 @@ namespace rpgkit
 			data_item_consume.SetSaveFilename("data/data_item_consume");
 			if (data_item_consume.Load() == false)
 			{
+				DataItemParam item = new DataItemParam();
+				item.item_id = 1;
+				data_item_consume.AddItem(item);
 				Debug.Log("loaderror.data_item_consume");
 			}
 			data_item_equip = new DataItem();
@@ -61,7 +64,7 @@ namespace rpgkit
 			{
 				DataCharaParam slime = new DataCharaParam();
 				slime.chara_id = 1;
-				slime.party_position = 1;
+				slime.position = 1;
 				slime.Build(1, master_chara.list.Find(p => p.chara_id == 1));
 				data_chara.list.Add(slime);
 			}

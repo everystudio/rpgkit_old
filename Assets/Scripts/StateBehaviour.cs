@@ -12,7 +12,6 @@ namespace rpgkit
 			{
 				if(on_update != value)
 				{
-					Debug.Log("gomi");
 					m_bInitOnUpdate = true;
 					on_update_begin = value;
 					on_update = value;
