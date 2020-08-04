@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace rpgkit
 {
-    public class DataManager : StaticInstance<DataManager>
+    public class DataManager : Singleton<DataManager>
     {
 		public bool Initialized = false;
 		public TextAsset m_taMasterQuest;

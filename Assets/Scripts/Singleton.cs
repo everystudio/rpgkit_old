@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace rpgkit
 {
-	public class StaticInstance<T> : MonoBehaviour where T : StaticInstance<T>
+	public class Singleton<T> : StateBehavor where T : Singleton<T>
 	{
 		public static T Instance;
         public virtual void Initialize() { }

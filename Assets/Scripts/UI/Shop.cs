@@ -7,7 +7,7 @@ using TMPro;
 
 namespace rpgkit
 {
-    public class Shop : StaticInstance<Shop>
+    public class Shop : Singleton<Shop>
     {
         private const int item_limit = 1;
         public MasterItemParam[] m_itemLineup;

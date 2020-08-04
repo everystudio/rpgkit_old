@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace rpgkit
 {
-    public class PlayerControl : StaticInstance<PlayerControl>
+    public class PlayerControl : Singleton<PlayerControl>
     {
         public string m_strTargetTeleporterName;
         public bool m_bCanMove = true;

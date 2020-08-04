@@ -6,7 +6,7 @@ using System;
 
 namespace rpgkit
 {
-    public class ScreenEffect : StaticInstance<ScreenEffect>
+    public class ScreenEffect : Singleton<ScreenEffect>
     {
         public Image m_imgScreen;
         public float m_fFadeSpeed;

@@ -6,7 +6,7 @@ using System;
 
 namespace rpgkit
 {
-    public class DialogManager : StaticInstance<DialogManager>
+    public class DialogManager : Singleton<DialogManager>
     {
 
         public TextMeshProUGUI m_txtDialog;
