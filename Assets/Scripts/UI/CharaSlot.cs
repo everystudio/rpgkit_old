@@ -8,6 +8,7 @@ namespace rpgkit
 {
     public class CharaSlot : MonoBehaviour
     {
+        public Button m_btn;
         public TextMeshProUGUI m_txtName;
         public TextMeshProUGUI m_txtLevel;
         public Slider m_slExp;
@@ -18,6 +19,10 @@ namespace rpgkit
 
         public void Initialize(MasterCharaParam _master , DataCharaParam _data)
         {
+            if(m_btn == null)
+            {
+                m_btn = gameObject.GetComponent<Button>();
+            }
             m_txtName.text = _master.name;
             m_txtLevel.text = _data.level.ToString();
             m_slHP.value = (float)(_data.hp_current / _data.hp_max);

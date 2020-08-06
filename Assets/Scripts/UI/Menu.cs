@@ -57,7 +57,7 @@ namespace rpgkit
 
                 m_prefCharaSlot.SetActive(false);
                 List<DataCharaParam> party_list = DataManager.Instance.data_chara.list.FindAll(p => 0 < p.position);
-                party_list.Sort((a, b) => (b.position - a.position));
+                party_list.Sort((a, b) => (a.position - b.position));
 
                 foreach (DataCharaParam data in party_list)
                 {

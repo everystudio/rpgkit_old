@@ -46,9 +46,16 @@ namespace rpgkit
 			data_item_consume.SetSaveFilename("data/data_item_consume");
 			if (data_item_consume.Load() == false)
 			{
-				DataItemParam item = new DataItemParam();
-				item.item_id = 1;
+				DataItemParam item = new DataItemParam
+				{
+					item_id = 1
+				};
 				data_item_consume.AddItem(item);
+				DataItemParam item2 = new DataItemParam
+				{
+					item_id = 1
+				};
+				data_item_consume.AddItem(item2);
 				Debug.Log("loaderror.data_item_consume");
 			}
 			data_item_equip = new DataItem();
@@ -62,11 +69,20 @@ namespace rpgkit
 			data_chara.SetSaveFilename("data/data_chara");
 			if( data_chara.Load() == false)
 			{
-				DataCharaParam slime = new DataCharaParam();
-				slime.chara_id = 1;
-				slime.position = 1;
+				DataCharaParam slime = new DataCharaParam
+				{
+					chara_id = 1,
+					position = 1
+				};
 				slime.Build(1, master_chara.list.Find(p => p.chara_id == 1));
 				data_chara.list.Add(slime);
+				DataCharaParam fairy = new DataCharaParam
+				{
+					chara_id = 3,
+					position = 2
+				};
+				fairy.Build(1, master_chara.list.Find(p => p.chara_id == 3));
+				data_chara.list.Add(fairy);
 			}
 
 			gold = 100;
