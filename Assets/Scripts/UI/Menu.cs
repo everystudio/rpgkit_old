@@ -17,7 +17,7 @@ namespace rpgkit
         public GameObject m_prefCharaSlot;
 
         public MenuItems menu_items;
-
+        public MenuEquips menu_equips;
 
         public void Initialize()
         {
@@ -89,6 +89,13 @@ namespace rpgkit
         }
         public void equip(bool _bInit)
         {
+            if (_bInit)
+            {
+                m_rootCharaSlot.SetActive(false);
+
+                menu_items.gameObject.SetActive(true);
+                menu_items.Init();
+            }
 
         }
         public void skills(bool _bInit)
