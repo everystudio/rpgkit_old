@@ -1,0 +1,152 @@
+rpgkitで必要になる要素
+
+共通処理
+ Singleton
+
+キャラの操作
+ PlayerControl
+
+トランスポーター
+ TeleportEntry
+ TeleportTo
+
+画面演出
+ ScreenEffect
+
+オンオフ切り替え
+ ObjectActivator
+
+クエスト・イベント
+
+
+
+
+
+スクリプト
+TeleportTo
+TeleportFrom
+
+BattleStarter
+
+PlayerControl
+フィールド
+
+
+宝箱管理
+Chest
+ChestManager
+
+カメラの制御
+
+
+自分はプリコロ・レイにしておきますね
+UIは専用のシーンを作って使い回す
+
+UIに必要な画面
+ScreenEffect
+　＞Imageだけ
+Dialog Box
+ >名前
+ >メッセージ
+Got Item Message
+ >画面上部に１行程度のメッセージ
+ 通知っぽい感じで出ると良いかも
+Menu(たくさん入ってる)
+メニューボタン(アイテム・装備・スキル・ステータス・閉じるなど)
+ >キャラクタースロット(見開きでステータスが確認出来るやつ。FFとかのステータス画面開いた直後のやつかな)
+ItemWindow
+ >所持アイテムが10個
+ >詳細ウインド１つ
+ >使うボタン
+ >捨てるボタン
+ >キャラクタースロットを表示するスペース
+EquipWindow
+ >装備スロット10個（アイテムとは別枠？）
+ 基本的にはItemWindowと同じ
+ キャラクタースロットが装備用にちょっと違う感じ
+SkillWindow
+ キャラ選択ボタン
+ スキルリスト
+StatusWindow
+ パーティーキャラのステータス一覧
+
+Shop Window
+ >販売ウィンドウ
+ >売却ウィンドウ(アイテム)
+ >売却ウィンドウ(装備)
+ >所持金
+
+Inn Window
+ >泊まるボタン
+ >やめるボタン
+ >所持金
+ >泊まるかの確認ウインド
+
+Reward Screen
+ >報酬画面
+ 経験値、ゴールド
+ なんかアイテム
+ 閉じるボタン
+
+Save Point
+ セーブボタン
+ 閉じるボタン
+ Prompt画面
+
+Saving
+ 右下にちらっと
+
+
+2020-07-20
+QuestManagerを作る
+Quest用のデータが欲しくなったのでCSVデータを使えるようにする
+
+DataManagerがやっぱり必要で準備
+
+ObjectActivatorを用意
+イベントの完了具合で表示非表示をコントロールすることが出来る。
+
+DialogHandle
+開始をボタン押したときや入ったときなど起動のバリエーションを増やす
+
+お店の人を作る
+Itemを販売
+
+アイテムを管理するために以下の２つのクラスが必要
+MasterItem
+DataItem
+CsvDataクラスを使ってデータを用意
+DataManagerを用意
+
+DialogHandleを継承したShopKeeper
+
+Shop
+
+買い物
+
+購入用にユーザーデータを追加
+data_item_consume
+data_item_equip
+
+購入用の金額について
+　いったんDataManagerにデータを準備
+
+所持ゴールドを表示に反映させる
+入店時
+購入時
+売却時
+
+売却処理
+所持上限（アイテム・装備）
+
+ステータス画面を作る -------------------------------
+
+
+
+
+
+バトル関連
+BattleStarter.cs
+
+
+
