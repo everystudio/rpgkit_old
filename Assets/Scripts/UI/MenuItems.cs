@@ -96,6 +96,7 @@ namespace rpgkit
                 CharaSlot script = instance.GetComponent<CharaSlot>();
 
                 script.Initialize(master, data);
+
                 script.m_btn.interactable = false;
 
                 script.m_btn.onClick.AddListener(() =>

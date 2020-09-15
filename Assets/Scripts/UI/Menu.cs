@@ -8,7 +8,8 @@ namespace rpgkit
     public class Menu : StateBehavor
     {
         public Button m_btnClose;
-        public Button m_btnItems;
+        [SerializeField]
+        private Button m_btnItems;
         public Button m_btnEquip;
         public Button m_btnSkills;
         public Button m_btnStatus;

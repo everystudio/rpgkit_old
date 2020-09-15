@@ -12,7 +12,7 @@ namespace rpgkit
         public TextMeshProUGUI m_txtName;
         public TextMeshProUGUI m_txtLevel;
         public Slider m_slExp;
-        public Slider m_slHP;
+        private Slider m_slHP;
         public Slider m_slSP;
         public TextMeshProUGUI m_txtHP;
         public TextMeshProUGUI m_txtSP;

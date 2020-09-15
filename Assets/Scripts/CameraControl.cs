@@ -17,6 +17,9 @@ namespace rpgkit
         private float halfHeight;
         private float halfWidth;
 
+        public int musicToPlay;
+        private bool musicStarted;
+
         void Start()
         {
             float targetaspect = 16.0f / 9.0f;
@@ -66,6 +69,13 @@ namespace rpgkit
         {
             transform.position = new Vector3(player.position.x, player.position.y, transform.position.z);
             transform.position = new Vector3(Mathf.Clamp(transform.position.x, boundary1.x, boundary2.x), Mathf.Clamp(transform.position.y, boundary1.y, boundary2.y), transform.position.z);
+
+            if (!musicStarted)
+            {
+                musicStarted = true;
+                AudioManager.Instance.PlayBGM(musicToPlay);
+            }
+
         }
     }
 }
