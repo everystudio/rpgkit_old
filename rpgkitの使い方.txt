@@ -34,6 +34,7 @@ PlayerControl
 
 宝箱管理
 Chest
+
 ChestManager
 
 カメラの制御
@@ -148,5 +149,6 @@ data_item_equip
 バトル関連
 BattleStarter.cs
 
+BattleManager.cs
 
 

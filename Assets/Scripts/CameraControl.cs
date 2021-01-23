@@ -73,7 +73,10 @@ namespace rpgkit
             if (!musicStarted)
             {
                 musicStarted = true;
-                AudioManager.Instance.PlayBGM(musicToPlay);
+                if (AudioManager.Instance != null)
+                {
+                    AudioManager.Instance.PlayBGM(musicToPlay);
+                }
             }
 
         }
